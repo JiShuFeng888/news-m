@@ -24,14 +24,30 @@ const routes = [
         component: () => import('./../views/music/index')
       },
       {
-        path: 'search',
-        component:()=>import('./../views/search/index')
-      },
-      {
         path: 'account',//默认子路由
         component:()=>import('./../views/account/index')
       },
     ]
+  },
+  {
+    path: '/search',
+    component:()=>import('./../views/search/index')
+  },
+  {
+    path: '/article/:articleId',
+    name:'article',
+    component:()=>import('./../views/article/index'),
+    props:true
+  },
+  {
+    path: '/user/profile',
+    name:'userProfile',
+    component:()=>import('./../views/userProfile/index'),
+  },
+  {
+    path: '/starArticle',
+    name:'starArticle',
+    component:()=>import('./../views/account/components/starArticle')
   },
 
 ]

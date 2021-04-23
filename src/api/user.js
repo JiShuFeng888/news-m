@@ -2,6 +2,16 @@
 
 import request from "@/utils/request";
 
+
+
+/*用户信息*/
+export const getUserProfile=(id)=>{
+  return request({
+    method:'get',
+    url:`/user/${id}`,
+  })
+}
+
 /*登录注册*/
 export const login=(data)=>{
   return request({
@@ -10,6 +20,7 @@ export const login=(data)=>{
     data
   })
 }
+
 export const register=(data)=>{
   return request({
     method:'post',
@@ -22,6 +33,14 @@ export const getUserChannels=()=>{
   return request({
     method:'get',
     url:'category',
+
+  })
+}
+
+export const getStarArticle=()=>{
+  return request({
+    method:'get',
+    url:'/user_star',
 
   })
 }

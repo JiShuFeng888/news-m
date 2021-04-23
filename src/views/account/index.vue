@@ -11,7 +11,7 @@
           class="photo"
         />
         <div slot="title" class="name">{{currentUser.nickname}}</div>
-        <van-button round class="update-btn">编辑资料</van-button>
+        <van-button round class="update-btn" to="/user/profile">编辑资料</van-button>
       </van-cell>
 
 
@@ -49,6 +49,7 @@
                         icon="shoucang"
                         text="收藏"
                         class="nav-gird-item"
+                        to="/starArticle"
         />
         <van-grid-item  icon-prefix="new"
                         icon="lishi" text="历史"
@@ -58,10 +59,13 @@
       </van-cell-group>
       <div class="not-login" v-else>
         <van-icon size="60px" name="https://b.yzcdn.cn/vant/icon-demo-1126.png" />
-        <p @click="$router.push('/login')">登录/注册</p>
+        <p @click="$router.push({
+          name:'login',
+          query:{
+            redirect:'/'
+          }
+        })">登录/注册</p>
       </div>
-      <van-cell title="消息通知" is-link to="" />
-      <van-cell title="聊天机器人" is-link to="" />
       <van-cell v-if="user" title="退出登录" class="logout-ceil" @click="onLogout"/>
   </div>
 </template>
@@ -69,6 +73,7 @@
 <script>
 import {mapActions, mapState} from 'vuex'
 import {getCurrentUser} from "@/api/user";
+import {setLocalStorage} from "@/utils/tools";
 
 export default {
   name: '',
@@ -85,6 +90,7 @@ export default {
   beforeMount() {
   },
   mounted() {
+    this.$store.commit('addCachePage','layoutIndex')
   },
   created() {
     this.getUser()
@@ -107,7 +113,7 @@ export default {
       let id=this.user.user.id
       let currentUser=await getCurrentUser(id)
       this.currentUser=currentUser.data.data
-      console.log(this.currentUser)
+      console.log(currentUser)
     }
   },
   watch: {}

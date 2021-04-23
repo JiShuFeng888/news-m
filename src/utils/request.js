@@ -1,6 +1,8 @@
 /*请求模块*/
 import axios from 'axios'
 import store from './../store/index'
+import {Toast} from "vant";
+
 const request=axios.create({
    baseURL:"http://157.122.54.189:9083",
 
@@ -27,6 +29,20 @@ request.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
   // 对响应错误做点什么
+  const status=error.response.status
+
+  if (status===400){
+    Toast.fail("服务端请求参数错误")
+  }else if(status===401){
+    //如果没有user
+
+
+  }else if(status===403){
+    Toast.fail("没有权限操作")
+
+  }else if(status>=500){
+    Toast.fail("服务端异常，请稍后尝试")
+  }
   return Promise.reject(error);
 });
 

@@ -27,14 +27,12 @@
             clearable
             icon-prefix="new"
             left-icon="yanzhengma"
-            placeholder="请输入验证码"
+            placeholder="请输入密码"
             center
             :rules="formRules.code"
             name="code"
           >
-          <template #button>
-            <van-button size="mini" round class="send-btn" @click.prevent="onSend">获取验证码</van-button>
-          </template>
+
           </van-field>
         </van-cell-group>
 
@@ -60,19 +58,14 @@ export default {
                   username:'',//手机号
                   password:'',//验证码
                 },
-                userInfo:{
-                  username:'13711111111',
-                  password:'246810',
-                  nickname:'Feng'
-                },
               formRules:{
                 mobile:[
                   { required: true, message: '请输入手机号'},
                   {pattern:/^1{3|5|7|8|9}\d{9}$/,message:"手机号格式错误"}
                 ],
                 code:[
-                  { required: true, message: '请输入验证码'},
-                  {pattern:/^\d{6}$/,message:"验证码格式错误"}
+                  { required: true, message: '请输入密码'},
+                  {pattern:/^\d{6}$/,message:"密码格式错误"}
                 ]
               }
 
@@ -112,8 +105,12 @@ export default {
              }
            Toast.success('登录成功');
              this.setUser(result.data.data)
+             //清楚登录界面缓存
+             this.$store.commit('removeCachePage','layoutIndex')
+
              //跳转登录页面
-             this.$router.back()
+             // this.$router.back()
+             this.$router.push(this.$route.query.redirect|| '/')
            }catch (err){
              Toast.fail('登录失败');
 
@@ -122,7 +119,11 @@ export default {
          },
           async onRegister(){
             try{
-              const result=await register(this.userInfo)
+              const result=await register({
+                username:this.user.username,
+                password:this.user.password,
+                nickname:Math.random()+""
+              })
               console.log(result);
             }catch (err){
               console.log("注册失败",err)

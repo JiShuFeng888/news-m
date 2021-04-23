@@ -1,5 +1,9 @@
 <template>
-          <van-cell class="article-item" :label="article.user.nickname">
+          <van-cell class="article-item" :label="article.user.nickname" :to="{
+          name:'article',
+          params:{
+              articleId:article.id+''
+          }}">
             <div slot="title" class="title van-multi-ellipsis--l3">{{article.title}}</div>
             <div slot="label">
               <div class="cover-wrap"   v-if="article.cover.length===3">
@@ -48,7 +52,9 @@
         components: {},
         computed: {},
         beforeMount() {},
-        mounted() {},
+        mounted() {
+          // console.log(this.article)
+        },
         methods: {},
         watch: {}
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="article-list">
+    <div class="article-list" ref="scrollView">
       <van-pull-refresh v-model="isRefresh" @refresh="onPullDownRefresh"  :success-text="refreshSuccessText" success-duration="1000">
       <van-list
         v-model="loading"
@@ -16,6 +16,7 @@
 <script>
 import {getArticle} from "@/api/article";
 import ArticleItem from "@/components/article-item";
+import {debounce} from 'lodash'
 
 export default {
         name:'ArticleList',
@@ -32,15 +33,22 @@ export default {
               finished: false,
               isRefresh:false,
               refreshSuccessText:'',
+              scrollTop:0,
+
             };
         },
         components: {
           ArticleItem
         },
-        computed: {},
+    activated(){
+      this.$refs.scrollView.scrollTop=this.scrollTop
+    },
+    computed: {},
         beforeMount() {},
         mounted() {
-
+            this.$refs.scrollView.onscroll=debounce(()=>{
+                  this.scrollTop=this.$refs.scrollView.scrollTop
+            },50)
         },
         methods: {
           async onPullDownRefresh(){

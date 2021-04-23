@@ -1,10 +1,35 @@
 <template>
   <div id="app">
-
-    <router-view></router-view>
+    <keep-alive :include="cachePages">
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
-<style lang="less">
+<script>
+import {mapState} from 'vuex'
+export default {
+  name:'',
+  props:[''],
+  data () {
+    return {
+
+    };
+  },
+  components: {},
+  computed: {
+    ...mapState(['cachePages'])
+  },
+  created(){},
+        beforeMount() {},
+        mounted() {},
+        methods: {},
+        watch: {}
+
+    }
+
+</script>
+
+<style lang='' scoped>
 
 </style>
